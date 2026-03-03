@@ -1,0 +1,65 @@
+[
+  {
+    "Work Item Id": 101,
+    "Work Item Type": "Bug",
+    "State": "Closed",
+    "Created Date": "2026-01-03",
+    "Closed Date": "2026-01-06",
+    "Title": "Forecasting mismatch on week view",
+    "Assigned To": "Ana",
+    "Closed By": "Ana",
+    "Iteration Path": "Sprint 1",
+    "Tags": "forecasting; kpi",
+    "Area Path": "CAS/Planning"
+  },
+  {
+    "id": 102,
+    "Issue Type": "Bug",
+    "Status": "Resolved",
+    "Created": "2026-01-05",
+    "Resolved": "2026-01-09",
+    "Title": "Error al borrar libranza desde mobile",
+    "Assignee": "Bruno",
+    "Sprint": "Sprint 1",
+    "Labels": "libranzas, delete shift",
+    "component": "Scheduling"
+  },
+  {
+    "Work Item Id": 103,
+    "Type": "Bug",
+    "Status": "Active",
+    "CreatedDate": "2026-01-10",
+    "ClosedDate": "",
+    "Title": "Alerta no dispara en ausencia",
+    "Assigned To": "Carla",
+    "Iteration": "Sprint 2",
+    "Tags": "alerta, ausencia",
+    "AreaPath": "Alerts"
+  },
+  {
+    "Work Item Id": 104,
+    "Type": "Bug",
+    "State": "Done",
+    "CreatedDate": 46034,
+    "ClosedDate": 46040,
+    "Title": "Shift Finder no muestra turnos solapados",
+    "Assigned To": "Diego",
+    "Closed By": "Diego",
+    "Iteration Path": "Sprint 2",
+    "Tags": "shift finder, overlap",
+    "Area Path": "Turnos"
+  },
+  {
+    "Work Item Id": 105,
+    "Type": "Bug",
+    "State": "Closed",
+    "CreatedDate": "2026-01-20",
+    "ClosedDate": "2026-01-24",
+    "Title": "Integracion CAS timeout en sincronizacion",
+    "Assigned To": "Elena",
+    "Closed By": "Elena",
+    "Iteration Path": "Sprint 3",
+    "Tags": "CAS, integration",
+    "Area Path": "Integraciones"
+  }
+]

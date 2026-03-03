@@ -1,0 +1,6 @@
+Work Item Type,State,Created Date,Closed Date,Title,Assigned To,Closed By,Iteration Path,Tags,Area Path
+Bug,Closed,2026-01-03,2026-01-06,Forecasting mismatch on week view,Ana,Ana,Sprint 1,"forecasting; kpi",CAS/Planning
+Bug,Resolved,2026-01-05,2026-01-09,Error al borrar libranza desde mobile,Bruno,Bruno,Sprint 1,"libranzas, delete shift",Scheduling
+Bug,Active,2026-01-10,,Alerta no dispara en ausencia,Carla,,Sprint 2,"alerta, ausencia",Alerts
+Bug,Done,2026-01-12,2026-01-18,Shift Finder no muestra turnos solapados,Diego,Diego,Sprint 2,"shift finder, overlap",Turnos
+Bug,Closed,2026-01-20,2026-01-24,Integracion CAS timeout en sincronizacion,Elena,Elena,Sprint 3,"CAS, integration",Integraciones
