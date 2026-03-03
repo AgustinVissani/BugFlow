@@ -1,6 +1,6 @@
 ﻿# Bug Metrics Dashboard
 
-Dashboard en Vite + React + TypeScript para cargar bugs (Excel/CSV/JSON), normalizar columnas heterogéneas y calcular métricas por sprint, dev y categoría.
+A Vite + React + TypeScript dashboard to upload bugs (Excel/CSV/JSON), normalize heterogeneous columns, and compute metrics by sprint, developer, and category.
 
 ## Stack
 - Vite + React + TypeScript
@@ -13,12 +13,12 @@ Dashboard en Vite + React + TypeScript para cargar bugs (Excel/CSV/JSON), normal
 - jsPDF
 - html2canvas
 
-## Instalación
+## Installation
 ```bash
 npm install
 ```
 
-## Ejecutar en desarrollo
+## Run in development
 ```bash
 npm run dev
 ```
@@ -28,27 +28,27 @@ npm run dev
 npm run build
 ```
 
-## Formato esperado de input (Bugs)
-La app acepta `.xlsx`, `.csv` y `.json`.
+## Expected input format (Bugs)
+The app accepts `.xlsx`, `.csv`, and `.json`.
 
-Campos soportados por alias (case-insensitive):
-- Tipo: `Work Item Type` / `Type` / `Issue Type`
-- Estado: `State` / `Status`
-- Creación: `Created Date` / `CreatedDate` / `Created`
-- Cierre: `Closed Date` / `ClosedDate` / `Resolved`
-- Título: `Title`
-- Asignado: `Assigned To` / `Assignee`
-- Cerrado por: `Closed By`
+Supported fields by alias (case-insensitive):
+- Type: `Work Item Type` / `Type` / `Issue Type`
+- Status: `State` / `Status`
+- Created: `Created Date` / `CreatedDate` / `Created`
+- Closed: `Closed Date` / `ClosedDate` / `Resolved`
+- Title: `Title`
+- Assigned To: `Assigned To` / `Assignee`
+- Closed By: `Closed By`
 - Sprint: `Sprint` / `Iteration Path` / `Iteration`
 - Tags: `Tags` / `Labels`
 - Area: `Area Path` / `AreaPath`
 
-Reglas:
-- Si `Closed Date` está vacío, el bug se considera abierto.
-- `isClosed` también puede activarse por estado que contenga `Closed`, `Resolved` o `Done`.
-- Fechas aceptadas por `parseDateRobust`:
+Rules:
+- If `Closed Date` is empty, the bug is considered open.
+- `isClosed` can also be activated by a status containing `Closed`, `Resolved`, or `Done`.
+- Dates accepted by `parseDateRobust`:
   - Excel serial number
-  - ISO con/sin `Z`
+  - ISO with/without `Z`
   - `d/M/yyyy H:mm:ss`
   - `d/M/yyyy`
   - `M/d/yyyy H:mm:ss`
@@ -57,60 +57,60 @@ Reglas:
   - `yyyy-MM-dd`
 
 ## SprintCalendar
-Opciones:
-1. Subir archivo `.xlsx/.csv/.json`
-2. Pegar JSON en textarea
+Options:
+1. Upload a `.xlsx/.csv/.json` file
+2. Paste JSON in the textarea
 
-Formato aceptado para JSON pegado:
+Accepted format for pasted JSON:
 - `[{...}]`
 - `{ "data": [{...}] }`
 
-Columnas requeridas (case-insensitive):
+Required columns (case-insensitive):
 - `SprintName`
 - `StartDate`
 - `EndDate`
 
-Validaciones:
-- Fechas válidas
+Validations:
+- Valid dates
 - `EndDate >= StartDate`
 
-Si no hay SprintCalendar válido:
-- Se muestra warning
-- Se deshabilitan métricas/charts por sprint
-- Se mantienen métricas por dev y categoría
+If there is no valid SprintCalendar:
+- A warning is shown
+- Sprint metrics/charts are disabled
+- Developer and category metrics remain available
 
-## Cálculo por sprint (exacto)
-- Creados: `CreatedDate >= StartDate && CreatedDate < EndDate + 1 día`
-- Cerrados: `ClosedDate >= StartDate && ClosedDate < EndDate + 1 día`
+## Sprint calculation (exact)
+- Created: `CreatedDate >= StartDate && CreatedDate < EndDate + 1 day`
+- Closed: `ClosedDate >= StartDate && ClosedDate < EndDate + 1 day`
 
 ## Warnings
-La app muestra warnings claros para:
-- Columnas faltantes
-- Fechas inválidas en filas con porcentaje y ejemplos (máximo 5)
-- SprintCalendar faltante o inválido
+The app shows clear warnings for:
+- Missing columns
+- Invalid dates in rows, with percentage and examples (up to 5)
+- Missing or invalid SprintCalendar
 
 ## Export
-- `Export metrics JSON`: descarga `metrics-result.json`
-- `Export CSV`: descarga `metrics-export.zip` con:
+- `Export metrics JSON`: downloads `metrics-result.json`
+- `Export CSV`: downloads `metrics-export.zip` with:
   - `sprint_metrics.csv`
   - `dev_metrics.csv`
-- `Export PDF`: genera `bug-metrics-dashboard.pdf` con 5 páginas:
-  1. Resumen + warnings
+- `Export PDF`: generates `bug-metrics-dashboard.pdf` with 5 pages:
+  1. Summary + warnings
   2. Created vs Closed by Sprint
   3. Net by Sprint
   4. Closed by Dev
   5. Category Distribution
 
-Durante PDF export se muestra `Generating PDF...` y botones deshabilitados.
+During PDF export, `Generating PDF...` is shown and buttons are disabled.
 
-## Samples incluidos
+## Included samples
 - `public/sample.json`
 - `public/sample.csv`
 - `public/sample-sprint-calendar.csv`
 
-## Prueba rápida
-1. Abrí la app (`npm run dev`).
-2. Cargá `sample.json` o `sample.csv`.
-3. Cargá `sample-sprint-calendar.csv` o pegá JSON equivalente.
-4. Revisá cards, filtros y charts de sprint/dev/categoría.
-5. Probá exportar JSON, ZIP CSV y PDF.
+## Quick test
+1. Open the app (`npm run dev`).
+2. Upload `sample.json` or `sample.csv`.
+3. Upload `sample-sprint-calendar.csv` or paste equivalent JSON.
+4. Review cards, filters, and sprint/dev/category charts.
+5. Try exporting JSON, ZIP CSV, and PDF.
