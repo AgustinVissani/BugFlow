@@ -24,6 +24,7 @@ export interface BugNormalized {
   tags: string | null;
   areaPath: string | null;
   assignedTo: string | null;
+  createdBy: string | null;
   closedBy: string | null;
   sprint: string | null;
   createdDate: Date | null;

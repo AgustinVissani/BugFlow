@@ -40,6 +40,7 @@ Supported fields by alias (case-insensitive):
 - Closed: `Closed Date` / `ClosedDate` / `Resolved`
 - Title: `Title`
 - Assigned To: `Assigned To` / `Assignee`
+- Created By: `Created By` / `Reporter` / `Reported By` / `Author`
 - Closed By: `Closed By`
 - Sprint: `Sprint` / `Iteration Path` / `Iteration`
 - Tags: `Tags` / `Labels`
@@ -85,6 +86,11 @@ If there is no valid SprintCalendar:
 - Created: `CreatedDate >= StartDate && CreatedDate < EndDate + 1 day`
 - Closed: `ClosedDate >= StartDate && ClosedDate < EndDate + 1 day`
 
+## CAS / Created by us rules
+- `CAS`: open bug whose `Title` starts with `CAS` (examples: `CAS-123`, `CAS: 123`).
+- `Created by us`: open bug that is not `CAS` and has tag matching `Found20xx` (example: `Found2026SP02`).
+- `Other`: open bug that is neither `CAS` nor `Created by us`.
+
 ## Warnings
 The app shows clear warnings for:
 - Missing columns
@@ -97,7 +103,9 @@ The app shows clear warnings for:
   - `sprint_metrics.csv`
   - `dev_metrics.csv`
 - `open_priority_severity.csv`
-- `Export PDF`: generates `bug-metrics-dashboard.pdf` with 7 pages:
+- `open_cas_breakdown.csv`
+- `open_bug_aging.csv`
+- `Export PDF`: generates `bug-metrics-dashboard.pdf` with 9 pages:
   1. Summary + warnings
   2. Created vs Closed by Sprint
   3. Net by Sprint
@@ -105,6 +113,8 @@ The app shows clear warnings for:
   5. Category Distribution
   6. Open by Sprint State
   7. Open by Priority and Severity
+  8. Open CAS vs CBU
+  9. Open Bug Aging table
 
 During PDF export, `Generating PDF...` is shown and buttons are disabled.
 

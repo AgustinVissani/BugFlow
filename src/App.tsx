@@ -10,11 +10,14 @@ import { CategoryStackedBar } from './components/charts/CategoryStackedBar';
 import { ClosedByDevBar } from './components/charts/ClosedByDevBar';
 import { CreatedVsClosedBySprintBar } from './components/charts/CreatedVsClosedBySprintBar';
 import { NetBySprintLine } from './components/charts/NetBySprintLine';
+import { OpenBugAgingTable } from './components/charts/OpenBugAgingTable';
+import { OpenCasBreakdownBar } from './components/charts/OpenCasBreakdownBar';
 import { OpenByPrioritySeverityMatrix } from './components/charts/OpenByPrioritySeverityMatrix';
 import { OpenBySprintStateBar } from './components/charts/OpenBySprintStateBar';
 import { computeActiveBySprint, type ActiveMode } from './metrics/activeBySprint';
 import { computeCategoryMetrics } from './metrics/category';
 import { computeDevMetrics } from './metrics/dev';
+import { computeOpenCasAging } from './metrics/openCasAging';
 import { computeOpenByPrioritySeverity } from './metrics/openByPrioritySeverity';
 import { computeOpenBySprintState } from './metrics/openBySprintState';
 import { computeSprintMetrics } from './metrics/sprint';
@@ -441,6 +444,10 @@ function App() {
     () => computeActiveBySprint(filteredBugs, orderedCalendar, activeMode, asOfDate),
     [filteredBugs, orderedCalendar, activeMode, asOfDate],
   );
+  const openCasAging = useMemo(
+    () => computeOpenCasAging(filteredBugs, asOfDate),
+    [filteredBugs, asOfDate],
+  );
 
   const devNames = useMemo(() => {
     const values = filteredBugs.map((bug) => bug.closedBy || bug.assignedTo || 'Unassigned');
@@ -528,6 +535,27 @@ function App() {
         ),
       ),
     );
+    zip.file('open_cas_breakdown.csv', toCsv(openCasAging.breakdown));
+    zip.file(
+      'open_bug_aging.csv',
+      toCsv(
+        openCasAging.rows.map((row) => ({
+          id: row.id,
+          origin: row.origin,
+          casScope: row.isCas ? 'CAS' : 'CBU',
+          createdByUs: row.isFoundByUs ? 'Yes' : 'No',
+          state: row.state,
+          sprint: row.sprint,
+          priority: row.priority,
+          severity: row.severity,
+          createdDate: row.createdDate ? format(row.createdDate, 'yyyy-MM-dd') : '',
+          daysOpen: row.daysOpen ?? '',
+          createdBy: row.createdBy,
+          assignedTo: row.assignedTo,
+          title: row.title,
+        })),
+      ),
+    );
     const blob = await zip.generateAsync({ type: 'blob' });
     downloadBlob('metrics-export.zip', blob);
   };
@@ -544,6 +572,8 @@ function App() {
         'chart-category',
         'chart-open-state',
         'chart-priority-severity',
+        'chart-open-cas',
+        'table-open-aging',
       ];
 
       const pdf = new jsPDF('p', 'mm', 'a4');
@@ -859,6 +889,12 @@ function App() {
           </div>
           <div id="chart-priority-severity" className="lg:col-span-2">
             <OpenByPrioritySeverityMatrix result={openByPrioritySeverity} />
+          </div>
+          <div id="chart-open-cas">
+            <OpenCasBreakdownBar data={openCasAging.breakdown} />
+          </div>
+          <div id="table-open-aging" className="lg:col-span-2">
+            <OpenBugAgingTable rows={openCasAging.rows} />
           </div>
         </section>
       </main>
