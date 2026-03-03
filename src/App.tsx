@@ -10,10 +10,12 @@ import { CategoryStackedBar } from './components/charts/CategoryStackedBar';
 import { ClosedByDevBar } from './components/charts/ClosedByDevBar';
 import { CreatedVsClosedBySprintBar } from './components/charts/CreatedVsClosedBySprintBar';
 import { NetBySprintLine } from './components/charts/NetBySprintLine';
+import { OpenByPrioritySeverityMatrix } from './components/charts/OpenByPrioritySeverityMatrix';
 import { OpenBySprintStateBar } from './components/charts/OpenBySprintStateBar';
 import { computeActiveBySprint, type ActiveMode } from './metrics/activeBySprint';
 import { computeCategoryMetrics } from './metrics/category';
 import { computeDevMetrics } from './metrics/dev';
+import { computeOpenByPrioritySeverity } from './metrics/openByPrioritySeverity';
 import { computeOpenBySprintState } from './metrics/openBySprintState';
 import { computeSprintMetrics } from './metrics/sprint';
 import { normalizeRows, parseDateRobust } from './parsers/normalize';
@@ -430,6 +432,10 @@ function App() {
     () => computeOpenBySprintState(filteredBugs, orderedCalendar),
     [filteredBugs, orderedCalendar],
   );
+  const openByPrioritySeverity = useMemo(
+    () => computeOpenByPrioritySeverity(filteredBugs),
+    [filteredBugs],
+  );
   const asOfDate = useMemo(() => parseDateRobust(asOfDateInput) || new Date(), [asOfDateInput]);
   const activeBySprint = useMemo(
     () => computeActiveBySprint(filteredBugs, orderedCalendar, activeMode, asOfDate),
@@ -510,6 +516,18 @@ function App() {
     const zip = new JSZip();
     zip.file('sprint_metrics.csv', toCsv(sprintMetrics));
     zip.file('dev_metrics.csv', toCsv(devMetrics));
+    zip.file(
+      'open_priority_severity.csv',
+      toCsv(
+        openByPrioritySeverity.rows.flatMap((row) =>
+          openByPrioritySeverity.severities.map((severity) => ({
+            priority: row.priority,
+            severity,
+            open: row.severityCounts[severity] ?? 0,
+          })),
+        ),
+      ),
+    );
     const blob = await zip.generateAsync({ type: 'blob' });
     downloadBlob('metrics-export.zip', blob);
   };
@@ -525,6 +543,7 @@ function App() {
         'chart-dev',
         'chart-category',
         'chart-open-state',
+        'chart-priority-severity',
       ];
 
       const pdf = new jsPDF('p', 'mm', 'a4');
@@ -837,6 +856,9 @@ function App() {
             ) : (
               <ActiveBySprintBar data={activeBySprint} mode={activeMode} asOfDate={asOfDate} />
             )}
+          </div>
+          <div id="chart-priority-severity" className="lg:col-span-2">
+            <OpenByPrioritySeverityMatrix result={openByPrioritySeverity} />
           </div>
         </section>
       </main>

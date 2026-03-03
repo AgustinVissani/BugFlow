@@ -18,6 +18,8 @@ export interface BugNormalized {
   id: string;
   workItemType: string | null;
   state: string | null;
+  priority: string | null;
+  severity: string | null;
   title: string | null;
   tags: string | null;
   areaPath: string | null;

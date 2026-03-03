@@ -34,6 +34,8 @@ The app accepts `.xlsx`, `.csv`, and `.json`.
 Supported fields by alias (case-insensitive):
 - Type: `Work Item Type` / `Type` / `Issue Type`
 - Status: `State` / `Status`
+- Priority: `Priority` / `Prio`
+- Severity: `Severity` / `Impact`
 - Created: `Created Date` / `CreatedDate` / `Created`
 - Closed: `Closed Date` / `ClosedDate` / `Resolved`
 - Title: `Title`
@@ -94,12 +96,15 @@ The app shows clear warnings for:
 - `Export CSV`: downloads `metrics-export.zip` with:
   - `sprint_metrics.csv`
   - `dev_metrics.csv`
-- `Export PDF`: generates `bug-metrics-dashboard.pdf` with 5 pages:
+- `open_priority_severity.csv`
+- `Export PDF`: generates `bug-metrics-dashboard.pdf` with 7 pages:
   1. Summary + warnings
   2. Created vs Closed by Sprint
   3. Net by Sprint
   4. Closed by Dev
   5. Category Distribution
+  6. Open by Sprint State
+  7. Open by Priority and Severity
 
 During PDF export, `Generating PDF...` is shown and buttons are disabled.
 
@@ -112,5 +117,5 @@ During PDF export, `Generating PDF...` is shown and buttons are disabled.
 1. Open the app (`npm run dev`).
 2. Upload `sample.json` or `sample.csv`.
 3. Upload `sample-sprint-calendar.csv` or paste equivalent JSON.
-4. Review cards, filters, and sprint/dev/category charts.
+4. Review cards, filters, sprint/dev/category charts, and the priority/severity matrix.
 5. Try exporting JSON, ZIP CSV, and PDF.
